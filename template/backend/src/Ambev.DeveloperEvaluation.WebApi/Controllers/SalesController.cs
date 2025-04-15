@@ -16,17 +16,42 @@ namespace Ambev.DeveloperEvaluation.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateSale([FromBody] SaleDto saleDto)
+        public async Task<IActionResult> CreateSale([FromBody] SaleDto saleDto)
         {
             try
             {
-                var sale = _saleService.CreateSale(saleDto);
+                var sale = await _saleService.CreateSaleAsync(saleDto);
                 return Created(string.Empty, sale);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new
+                {
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message
+                });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllSales()
+        {
+            var sales = await _saleService.GetAllSalesAsync();
+            return Ok(sales);
+        }
+
+        [HttpPut("{id}/cancel")]
+        public async Task<IActionResult> CancelSale(Guid id)
+        {
+            var success = await _saleService.CancelSaleAsync(id);
+
+            if (!success)
+                return NotFound(new { message = "Venda não encontrada." });
+
+            return NoContent();
+        }
+
+
     }
+
 }
