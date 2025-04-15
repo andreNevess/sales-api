@@ -1,8 +1,10 @@
 using Ambev.DeveloperEvaluation.Application;
+using Ambev.DeveloperEvaluation.Application.UseCases;
 using Ambev.DeveloperEvaluation.Common.HealthChecks;
 using Ambev.DeveloperEvaluation.Common.Logging;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Common.Validation;
+using Ambev.DeveloperEvaluation.Domain.Services;
 using Ambev.DeveloperEvaluation.IoC;
 using Ambev.DeveloperEvaluation.ORM;
 using Ambev.DeveloperEvaluation.WebApi.Middleware;
@@ -24,6 +26,13 @@ public class Program
             builder.AddDefaultLogging();
 
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<SaleService>();
+            builder.Services.AddScoped<DiscountCalculatorService>();
+
+            builder.Services.AddDbContext<DefaultContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddEndpointsApiExplorer();
 
             builder.AddBasicHealthChecks();
