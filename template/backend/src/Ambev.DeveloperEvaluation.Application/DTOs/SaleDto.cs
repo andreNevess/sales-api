@@ -8,6 +8,7 @@ namespace Ambev.DeveloperEvaluation.Application.DTOs
 {
     public class SaleDto
     {
+        public Guid Id { get; set; }
         public string SaleNumber { get; set; } = string.Empty;
         public DateTime SaleDate { get; set; }
         public string Customer { get; set; } = string.Empty;

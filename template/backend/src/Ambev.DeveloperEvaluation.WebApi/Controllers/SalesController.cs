@@ -9,6 +9,9 @@ namespace Ambev.DeveloperEvaluation.WebApi.Controllers
     public class SalesController : ControllerBase
     {
         private readonly SaleService _saleService;
+        private readonly string SALE_NOT_FOUND = "Venda não encontrada.";
+
+
 
         public SalesController(SaleService saleService)
         {
@@ -46,10 +49,22 @@ namespace Ambev.DeveloperEvaluation.WebApi.Controllers
             var success = await _saleService.CancelSaleAsync(id);
 
             if (!success)
-                return NotFound(new { message = "Venda não encontrada." });
+                return NotFound(new { message = SALE_NOT_FOUND });
 
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSaleById(Guid id)
+        {
+            var sale = await _saleService.GetSaleByIdAsync(id);
+
+            if (sale == null)
+                return NotFound(new { message = SALE_NOT_FOUND });
+
+            return Ok(sale);
+        }
+
 
 
     }

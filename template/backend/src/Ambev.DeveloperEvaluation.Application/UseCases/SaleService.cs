@@ -68,8 +68,30 @@ namespace Ambev.DeveloperEvaluation.Application.UseCases
             _context.Sales.Update(sale);
             await _context.SaveChangesAsync();
 
+            PublishSaleCancelledEvent(sale.Id);
             return true;
         }
+
+        public async Task<SaleDto?> GetSaleByIdAsync(Guid id)
+        {
+            var sale = await _context.Sales
+                .Include(s => s.Items)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (sale == null)
+                return null;
+
+            return _mapper.Map<SaleDto>(sale);
+        }
+
+
+
+
+        private void PublishSaleCancelledEvent(Guid saleId)
+        {
+            Console.WriteLine($"[EVENT] SaleCancelled - SaleId: {saleId} - {DateTime.UtcNow:o}");
+        }
+
 
 
 
