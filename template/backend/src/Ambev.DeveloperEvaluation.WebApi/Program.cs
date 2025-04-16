@@ -16,7 +16,7 @@ namespace Ambev.DeveloperEvaluation.WebApi;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         try
         {
@@ -79,7 +79,9 @@ public class Program
 
             app.MapControllers();
 
-            app.Run();
+            await StartupSeeder.SeedAsync(app);
+
+            await app.RunAsync();
         }
         catch (Exception ex)
         {
@@ -87,7 +89,7 @@ public class Program
         }
         finally
         {
-            Log.CloseAndFlush();
+            Log.CloseAndFlushAsync();
         }
     }
 }
