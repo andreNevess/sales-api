@@ -75,7 +75,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Sale
             Func<Task> act = async () => await service.CreateSaleAsync(dto);
 
             await act.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Não é permitido vender mais de 20 itens do mesmo produto.");
+                .WithMessage("Não é permitido vender mais de 20 unidades de um mesmo item.");
         }
 
         #endregion

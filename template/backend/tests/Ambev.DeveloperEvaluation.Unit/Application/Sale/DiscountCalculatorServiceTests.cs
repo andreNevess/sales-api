@@ -45,7 +45,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Sale
         {
             var action = () => _service.CalculateDiscount(quantity);
             action.Should().Throw<InvalidOperationException>()
-                .WithMessage("Não é permitido vender mais de 20 itens do mesmo produto.");
+                .WithMessage("Não é permitido vender mais de 20 unidades de um mesmo item.");
         }
     }
 }

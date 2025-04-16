@@ -9,6 +9,7 @@ Este projeto é uma API para gerenciamento de vendas, desenvolvida como parte de
 - AutoMapper
 - xUnit + FluentAssertions
 - Docker + Docker Compose
+- Bogus (geração de dados fake)
 
 ## Regras de negócio
 
@@ -26,6 +27,8 @@ Este projeto é uma API para gerenciamento de vendas, desenvolvida como parte de
 - [x] Cancelar venda `PUT /api/sales/{id}/cancel`
 - [x] Eventos simulados no console (`SaleCreated`, `SaleCancelled`)
 - [x] Testes unitários com banco em memória
+- [x] Endpoint de seeding: `POST /api/sales/seed`
+- [x] Seeding automático com variável `SEED_FAKE_DATA=true`
 
 ## Como executar
 
@@ -36,5 +39,4 @@ Este projeto é uma API para gerenciamento de vendas, desenvolvida como parte de
 
 ### Subir o banco:
 
-```bash
 docker-compose up -d
