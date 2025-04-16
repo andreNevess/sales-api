@@ -12,39 +12,39 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.Sale
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        public void Deve_Retornar_Zero_Para_Quantidade_Abaixo_De_4(int quantity)
+        public void Should_Return_Zero_Discount_When_Quantity_Is_Less_Than_4(int quantity)
         {
-            var desconto = _service.CalculateDiscount(quantity);
-            desconto.Should().Be(0.0m);
+            var discount = _service.CalculateDiscount(quantity);
+            discount.Should().Be(0.0m);
         }
 
         [Theory]
         [InlineData(4)]
         [InlineData(5)]
         [InlineData(9)]
-        public void Deve_Aplicar_10_Porcento_De_Desconto_Para_Quantidade_Entre_4_E_9(int quantity)
+        public void Should_Return_10_Percent_Discount_When_Quantity_Is_Between_4_And_9(int quantity)
         {
-            var desconto = _service.CalculateDiscount(quantity);
-            desconto.Should().Be(0.10m);
+            var discount = _service.CalculateDiscount(quantity);
+            discount.Should().Be(0.10m);
         }
 
         [Theory]
         [InlineData(10)]
         [InlineData(15)]
         [InlineData(20)]
-        public void Deve_Aplicar_20_Porcento_De_Desconto_Para_Quantidade_Entre_10_E_20(int quantity)
+        public void Should_Return_20_Percent_Discount_When_Quantity_Is_Between_10_And_20(int quantity)
         {
-            var desconto = _service.CalculateDiscount(quantity);
-            desconto.Should().Be(0.20m);
+            var discount = _service.CalculateDiscount(quantity);
+            discount.Should().Be(0.20m);
         }
 
         [Theory]
         [InlineData(21)]
         [InlineData(50)]
-        public void Deve_Lancar_Excecao_Para_Quantidade_Acima_De_20(int quantity)
+        public void Should_Throw_Exception_When_Quantity_Exceeds_20(int quantity)
         {
-            var acao = () => _service.CalculateDiscount(quantity);
-            acao.Should().Throw<InvalidOperationException>()
+            var action = () => _service.CalculateDiscount(quantity);
+            action.Should().Throw<InvalidOperationException>()
                 .WithMessage("Não é permitido vender mais de 20 itens do mesmo produto.");
         }
     }

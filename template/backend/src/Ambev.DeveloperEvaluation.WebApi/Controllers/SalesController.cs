@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Application.DTOs;
 using Ambev.DeveloperEvaluation.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
+using Ambev.DeveloperEvaluation.Application.Fake;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Controllers
 {
@@ -67,6 +68,20 @@ namespace Ambev.DeveloperEvaluation.WebApi.Controllers
 
 
 
-    }
+        [HttpPost("seed")]
+        public async Task<IActionResult> SeedFakeSales()
+        {
+            var fakeSales = FakeSaleGenerator.GenerateFakeSales(10);
+
+            foreach (var sale in fakeSales)
+                await _saleService.CreateSaleAsync(sale);
+
+            return Ok(new { message = $"{fakeSales.Count} vendas fake criadas com sucesso!" });
+        }
+
+
+
+
+}
 
 }
